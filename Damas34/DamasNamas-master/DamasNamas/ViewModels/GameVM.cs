@@ -657,7 +657,17 @@ namespace DamasNamas.ViewModels
 		/// </summary>
 		private void SetTurno()
 		{
-
+			if (Tablero.PiezasBlancas == 0 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasBlancas == 1)))
+			{
+				Estado = EstadosJuego.NegroGana;
+				
+				comprobarGanador();
+			}
+			else if (Tablero.PiezasNegras == 0 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasNegras == 1)))
+			{
+				Estado = EstadosJuego.BlancoGana;
+				comprobarGanador();
+			}
 			if (Estado.Equals(EstadosJuego.TurnoBlancas))
 			{
 				Estado = EstadosJuego.TurnoNegras;
@@ -670,6 +680,7 @@ namespace DamasNamas.ViewModels
 				ColorTurnoArriba = Colors.LightGreen;
 				ColorTurnoAbajo = Colors.LightGray;
 			}
+
 
 
 		}
@@ -874,6 +885,7 @@ namespace DamasNamas.ViewModels
 						.First();
 					huecomido.Pieza = "lightynone";
 					huecomido.EsReina = false;
+					Tablero.PiezasNegras--;
 					haComido = true;
 				}
 				else if (Estado.Equals(EstadosJuego.TurnoNegras) && (HuecoSeleccinado.PosX < HuecoAnterior.PosX - 1))
@@ -887,6 +899,7 @@ namespace DamasNamas.ViewModels
 						&&
 						(x.PosY == HuecoAnterior.PosY + signoDifY))
 						.First();
+					Tablero.PiezasBlancas--;
 					huecomido.Pieza = "lightynone";
 					huecomido.EsReina = false;
 					haComido = true;
@@ -970,6 +983,10 @@ namespace DamasNamas.ViewModels
 				}
 				huecomido.Pieza = "lightynone";
 				huecomido.EsReina = false;
+				if (Estado.Equals(EstadosJuego.TurnoBlancas))
+					Tablero.PiezasNegras--;
+				if(Estado.Equals(EstadosJuego.TurnoNegras))
+					Tablero.PiezasBlancas--;
 			
 
 
