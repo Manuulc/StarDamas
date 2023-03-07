@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+    
+<!--xmlns:alohakit="clr-namespace:AlohaKit.Animations;assembly=AlohaKit.Animations"
+             x:Class="_13_Resources2.MainPage">
+    <ContentPage.Resources>
+
+        <LinearGradientBrush x:Key="buttonBackground">
+            <GradientStop Offset="0" Color="Silver"/>
+            <GradientStop Offset="1" Color="Orange"/>
+        </LinearGradientBrush>
+       
+        <alohakit:StoryBoard
+            x:Key="StoryBoard"
+            Target="{x:Reference FadeBox}">
+            <alohakit:TranslateToAnimation
+            Duration="2000"
+             TranslateX="100"
+             TranslateY="100">
+            </alohakit:TranslateToAnimation>
+            <alohakit:ShakeAnimation />
+            
+            <alohakit:FadeToAnimation   
+            Duration="2000"
+             Opacity="0"/>
+           
+        </alohakit:StoryBoard>
+    </ContentPage.Resources>-->
+    
+    
+    
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DamasNamas.Views.GamePage"
+              xmlns:vm="clr-namespace:DamasNamas.ViewModels"
+             Title="GamePage"
+             
+             BackgroundImageSource="fondoestrellas.jpg">
+    <ContentPage.BindingContext>
+        <vm:GameVM/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout
+        Spacing="{OnPlatform Android=5}">
+        <Frame
+            Padding="0,0,0,10"
+            CornerRadius="60"
+            WidthRequest="60"
+            HeightRequest="60">
+        <Label 
+            Margin="{OnPlatform Android='0,10,0,0'}"
+                FontSize="20"
+                FontFamily="Bold"
+                Text="{Binding RelojMostrado}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+        </Frame>
+        <Frame
+            BorderColor="Gold"
+            Margin="5,10,5,5"
+            CornerRadius="20"
+            BackgroundColor="{Binding ColorTurnoArriba}">
+            <HorizontalStackLayout>
+
+                <Label
+                FontSize="25"
+                HeightRequest="30"
+                WidthRequest="300"
+                FontFamily="Bold"
+                Text="{Binding NombreJugadorArriba, Mode=OneWay}"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+
+
+                <Label
+                FontSize="25"
+                FontFamily="Bold"
+                Text="{Binding Tablero.PiezasBlancas}"
+                VerticalOptions="Center"
+                HorizontalOptions="End"/>
+
+
+            </HorizontalStackLayout>
+        </Frame>
+
+
+
+        <Frame
+            >
+        <CollectionView 
+            x:Name="tablero"
+            SelectionMode="Single"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            ItemsSource="{Binding HuecosTablero}"
+            SelectedItem="{Binding HuecoSeleccinado}"
+            HeightRequest="{OnPlatform Android=410, WinUI=350}"
+            WidthRequest="{OnPlatform Android=385, WinUI=300}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="8" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+                    <AbsoluteLayout
+                            VerticalOptions="Center"
+                            HeightRequest="{OnPlatform Android=50, WinUI=40}"
+                            WidthRequest="{OnPlatform Android=50, WinUI=40}"
+                            >
+
+                        <Image 
+                                WidthRequest="{OnPlatform Android=50, WinUI=40}"
+                                HeightRequest="{OnPlatform Android=50,WinUI=40}"
+                                Source="{Binding ColorFondo}"/>
+                        <Image 
+                            AbsoluteLayout.LayoutBounds="{OnPlatform Android='20,15,11,20'}"
+                                WidthRequest="{OnPlatform Android=45, WinUI=20}"
+                                HeightRequest="{OnPlatform Android=50,WinUI=20}"
+                                Source="{Binding Pieza}"/>
+
+                    </AbsoluteLayout>
+
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        </Frame>
+        <Frame
+            CornerRadius="20"
+            Margin="5,5,5,5"
+            BackgroundColor="{Binding ColorTurnoAbajo}"
+           >
+            <HorizontalStackLayout
+                Spacing="0">
+                <Label
+                FontSize="25"
+                HeightRequest="30"
+                WidthRequest="300"
+                FontFamily="Bold"
+                Text="{Binding NombreJugadorAbajo, Mode=OneWay}"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+
+                <Label
+                FontSize="25"
+                FontFamily="Bold"
+                Text="{Binding Tablero.PiezasNegras}"
+                VerticalOptions="Center"
+                HorizontalOptions="End"/>
+            </HorizontalStackLayout>
+        </Frame>
+
+    </VerticalStackLayout>
+</ContentPage>

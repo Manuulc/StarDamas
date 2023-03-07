@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="DamasNamas.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DamasNamas.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
+
+
+    <!--Zona de Log in-->
+    
+    <TabBar Title="Login"
+            FlyoutItemIsVisible="False">
+        <ShellContent
+                Title="Home"
+                ContentTemplate="{DataTemplate local:LoginPage}"
+                Route="MainPage" />
+
+    </TabBar>
+
+    
+    <!--Zona de salas y puntuaciones-->
+    
+
+    <TabBar Route="Main"
+            FlyoutItemIsVisible="True">
+
+        <Tab Title="Salas" Icon="key">
+            <ShellContent
+                Route="TipoJuego"
+                ContentTemplate="{DataTemplate local:EleccionModoJuegoPage}"/>
+        </Tab>
+        <Tab Title="Puntuaciones" Icon="usuario">
+            <ShellContent
+                Route="TipoJuego"
+                ContentTemplate="{DataTemplate local:Puntuaciones}"/>
+        </Tab>
+        
+      
+
+    </TabBar>
+
+
+    <!--Zona de Juego-->
+
+    <TabBar Title="Game"
+            FlyoutItemIsVisible="False">
+        <ShellContent
+                Route="Game"
+                ContentTemplate="{DataTemplate local:GamePage}"/>
+
+    </TabBar>
+
+
+    <!--TODO: Ver si esto funciona de verdad o es trolo-->
+    <FlyoutItem
+        FlyoutIcon="key"
+        Title="Log out"
+        >
+        <ShellContent
+            Route="Login"
+            ContentTemplate="{DataTemplate local:LoginPage}"/>
+    </FlyoutItem>
+
+
+</Shell>

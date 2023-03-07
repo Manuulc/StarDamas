@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DamasNamas.Views.Puntuaciones"
+             Title="Puntuaciones"
+             xmlns:vm="clr-namespace:DamasNamas.ViewModels"
+             BackgroundImageSource="fondoestrellas.jpg">
+    
+    <ContentPage.BindingContext>
+        <vm:TablaPuntuacionesVM/>
+    </ContentPage.BindingContext>
+ 
+    <AbsoluteLayout>
+        
+        <Frame
+            
+            Opacity=".6"
+        AbsoluteLayout.LayoutBounds="50,150,300,400"
+            
+        BackgroundColor="White">
+
+        </Frame>
+        <Label
+            AbsoluteLayout.LayoutBounds="40,70,500,70"
+            FontSize="30"
+            FontFamily="Starjedi.ttf"
+            TextColor="White"
+            Text="Mejores Jugadores"/>
+        <CollectionView
+            
+        AbsoluteLayout.LayoutBounds="80,155,280,380"
+            SelectionMode="None"
+            ItemsSource="{Binding JugadoresBuenisimos}">
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <HorizontalStackLayout
+                        Margin="10"
+                        Spacing="100">
+                        <Label
+                                FontSize="18"
+                            FontFamily="Starjedi"
+                                WidthRequest="120"
+                                Text="{Binding nombre}"
+                                />
+                        <Label
+                                FontSize="18"
+                            FontFamily="Starjedi"
+                                Text="{Binding partidasGanadas}"/>
+                        </HorizontalStackLayout>
+                    
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </AbsoluteLayout>
+</ContentPage>

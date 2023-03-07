@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DamasNamas.Views.EleccionModoJuegoPage"
+             xmlns:vm="clr-namespace:DamasNamas.ViewModels"
+             Title="EleccionModoJuegoPage"
+             BackgroundImageSource="fondoestrellas">
+    <ContentPage.BindingContext>
+        <vm:EleccionModoJuegoVM/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout
+        HeightRequest="500"
+        Spacing="100"
+        Margin="0,100,0,0"
+        VerticalOptions="Start">
+        <Label
+            FontFamily="Starjedi.ttf"
+            HorizontalOptions="Center"
+            TextColor="Gold"
+            FontSize="45"
+            Text="Star damas"/>
+   
+    <VerticalStackLayout
+        Spacing="80"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        WidthRequest="300"
+        >
+     
+
+
+        <Button 
+            FontFamily="Starjedi.ttf"
+            Opacity=".8"
+            FontSize="25"
+            BackgroundColor="Black"
+            Command="{Binding ComandoLocal}"
+            Text="Local"
+            HeightRequest="100"/>
+            <Button
+            FontSize="25"
+            FontFamily="Starjedi.ttf"
+            Opacity=".8"
+            BackgroundColor="Black"
+            Text="online"
+            Command="{Binding ComandoOnline}"
+            HeightRequest="100"/>
+        
+        
+        
+    </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
