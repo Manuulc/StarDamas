@@ -68,7 +68,7 @@ namespace DamasNamas.ViewModels
 			sala.jugadorArriba = JugadorLoggeado.idJugador;
 			var dic = new Dictionary<string, object>();
 			int idAbajo = 0;
-			var respuesta = await Shell.Current.DisplayActionSheet("Desea identificarte?", "Cancel", null, "Log in", "Sign up");
+			var respuesta = await Shell.Current.DisplayActionSheet("¿Que desea hacer?", "Cancel", null, "Log in", "Sign up");
 			if (respuesta == null)
 				respuesta = "Cancel";
 			if (respuesta.Equals("Cancel"))
@@ -81,13 +81,13 @@ namespace DamasNamas.ViewModels
 			else if (respuesta.Equals("Log in"))
 			{
 				string pass = null;
-				string name = await Shell.Current.DisplayPromptAsync("Identificate", "nombre de usuario", "Ok", "Cancel");
+				string name = await Shell.Current.DisplayPromptAsync("Identificate", "Nombre de usuario", "Ok", "Cancel");
 				if (name == null)
 					name = "Cancel";
 				if (!name.Equals("Cancel"))
 				{
 
-					pass = await Shell.Current.DisplayPromptAsync("Identificate", ("contraseña"));
+					pass = await Shell.Current.DisplayPromptAsync("Identificate", ("Contraseña"));
 					if (pass == null)
 						pass = "Cancel";
 					if (!pass.Equals("Cancel"))
@@ -120,16 +120,25 @@ namespace DamasNamas.ViewModels
 
 				clsJugador jugadorAbajo = null;
 				string pass = "";
-				string name = await Shell.Current.DisplayPromptAsync("Identificate", "nombre de usuario", "Ok", "Cancel");
+				string name = await Shell.Current.DisplayPromptAsync("Registrate", "Nombre de usuario", "Ok", "Cancel");
 				if (name == null)
 					name = "Cancel";
 				if (!name.Equals("Cancel"))
 				{
-					pass = await Shell.Current.DisplayPromptAsync("Identificate de la forma más segura", ("contraseña"), "Ok", "cancel");
+					pass = await Shell.Current.DisplayPromptAsync("Registrate de la forma más segura", ("Contraseña"), "Ok", "Cancel");
 					if (!pass.Equals("Cancel"))
 					{
-						var lista = await clsListadoJugadoresBL.getJugadoresBL();
 						jugadorAbajo = await LoginVM.TestSignUp(name, pass);
+						try
+						{
+							clsGestionJugadoresBL.insertarJugadorBL(jugadorAbajo);
+						}catch (Exception ex)
+						{
+                            await Shell.Current.DisplayAlert("Error", "No se ha podido registrar el usuario", "Ok");
+                        }
+
+						var lista = await clsListadoJugadoresBL.getJugadoresBL();
+						
 
 						var encontrado = false;
 						for (var i= 0;i < lista.Count() && !encontrado;i++)
@@ -177,7 +186,7 @@ namespace DamasNamas.ViewModels
 
 		async Task<String> comprobarSiTieneNombre()
 		{
-			var nombreSala = await Shell.Current.DisplayPromptAsync("", "Por ultimo, elige un nombre para vuestra sala", "Ok", "Cancel");
+			var nombreSala = await Shell.Current.DisplayPromptAsync("Crear sala", "Por ultimo, elige un nombre para vuestra sala", "Ok", "Cancel");
 			if (nombreSala == null)
 			{
 				nombreSala = "Cancel";
@@ -195,7 +204,8 @@ namespace DamasNamas.ViewModels
 					{
 						if (salaRecogida.nombreSala.Equals(nombreSala))
 						{
-							nombreSala = "Cancel";
+                            await Shell.Current.DisplayAlert("Error", "Ya hay una sala con ese nombre", "Ok");
+                            nombreSala = "Cancel";
 							return nombreSala;
 						}
 					}

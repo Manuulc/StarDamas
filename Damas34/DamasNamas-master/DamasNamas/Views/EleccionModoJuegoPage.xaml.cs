@@ -6,4 +6,9 @@ public partial class EleccionModoJuegoPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+    }
 }

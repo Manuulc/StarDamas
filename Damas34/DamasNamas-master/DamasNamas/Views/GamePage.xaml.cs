@@ -1,3 +1,5 @@
+using DamasNamas.ViewModels;
+
 namespace DamasNamas.Views;
 
 public partial class GamePage : ContentPage
@@ -7,5 +9,11 @@ public partial class GamePage : ContentPage
 		InitializeComponent();
  
 	}
-	
+
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+    }
+
 }

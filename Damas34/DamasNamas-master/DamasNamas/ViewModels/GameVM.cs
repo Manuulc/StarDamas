@@ -32,7 +32,7 @@ namespace DamasNamas.ViewModels
 		EstadosJuego estado;
 		String relojMostrado;
 		TimeSpan reloj;
-
+		bool haGanado;
 		#endregion
 
 		#region Properties
@@ -660,14 +660,21 @@ namespace DamasNamas.ViewModels
 			if (Tablero.PiezasBlancas == 0 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasBlancas == 1)))
 			{
 				Estado = EstadosJuego.NegroGana;
-				
-				comprobarGanador();
+
+				if (!haGanado)
+				{
+					comprobarGanador();
+				}
+				 
 			}
 			else if (Tablero.PiezasNegras == 0 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasNegras == 1)))
 			{
 				Estado = EstadosJuego.BlancoGana;
-				comprobarGanador();
-			}
+                if (!haGanado)
+                {
+                    comprobarGanador();
+                }
+            }
 			if (Estado.Equals(EstadosJuego.TurnoBlancas))
 			{
 				Estado = EstadosJuego.TurnoNegras;
@@ -748,7 +755,7 @@ namespace DamasNamas.ViewModels
 
 
 		/// <summary>
-		/// Método que comprueba el 
+		/// Método para mover la pieza al posible hueco
 		/// </summary>
 		private async void MovePieza()
 		{
@@ -766,18 +773,20 @@ namespace DamasNamas.ViewModels
 			   .First().Pieza = "lightynone";
 
 				TransformarReina();
-
+				var comer = Comer();
 				//Comerpieza
-				if (!Comer() || (Comer() && ListaPosiblesHuecos.Count == 0))
+				if (!comer || (comer && ListaPosiblesHuecos.Count == 0))
 				{
 					if (Tablero.PiezasBlancas == 0 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasBlancas == 1)))
 					{
 						Estado = EstadosJuego.NegroGana;
+						haGanado = true;
 						comprobarGanador();
 					}
 					else if (Tablero.PiezasNegras == 0 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasNegras == 1)))
 					{
 						Estado = EstadosJuego.BlancoGana;
+						haGanado = true;
 						comprobarGanador();
 					}
 					SetTurno();
@@ -852,6 +861,7 @@ namespace DamasNamas.ViewModels
 			}
 			return huecoAComer;
 		}
+
 		/// <summary>
 		/// Método que se encarga de comprobar si una pieza se cruza en el camino de otra,
 		/// después de esto, comprueba la casilla siguiente a la pieza que se ha comido,
@@ -866,6 +876,7 @@ namespace DamasNamas.ViewModels
 		/// </returns>
 		private bool Comer()
 		{
+
 			//Comprobamos si la diferencia entre los huecos es negativa o positiva.
 			var signoDifY = Math.Sign(HuecoSeleccinado.PosY - HuecoAnterior.PosY);
 			var haComido = false;
