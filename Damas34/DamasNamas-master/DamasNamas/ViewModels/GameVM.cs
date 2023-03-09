@@ -774,13 +774,13 @@ namespace DamasNamas.ViewModels
 				//Comerpieza
 				if (!comer )
 				{
-					if (Tablero.PiezasBlancas == 11 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasBlancas == 1)))
+					if (Tablero.PiezasBlancas == 0 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasBlancas == 1)))
 					{
 						Estado = EstadosJuego.NegroGana;
 						haGanado = true;
 						comprobarGanador();
 					}
-					else if (Tablero.PiezasNegras == 11 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasNegras == 1)))
+					else if (Tablero.PiezasNegras == 0 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasNegras == 1)))
 					{
 						Estado = EstadosJuego.BlancoGana;
 						haGanado = true;
