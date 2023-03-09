@@ -6,4 +6,10 @@ public partial class Puntuaciones : ContentPage
 	{
 		InitializeComponent();
 	}
+
+	protected override void OnAppearing()
+	{
+		InitializeComponent();
+		base.OnAppearing();
+	}
 }

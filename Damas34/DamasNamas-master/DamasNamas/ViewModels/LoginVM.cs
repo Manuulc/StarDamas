@@ -166,7 +166,7 @@ namespace DamasNamas.ViewModels
 
 				for (int i = 0; i < jugadores.Count && !logeadoConExito; i++)
 				{
-					if (jugadores[i].nombre.ToUpper().Equals(Username.ToUpper()) && jugadores[i].password.Equals(Password))
+					if (jugadores[i].nombre.ToUpper().Equals(Username.ToUpper().Trim()) && jugadores[i].password.Equals(Password))
 					{
 						JugadorALoggear = jugadores[i];
 						logeadoConExito = true;
@@ -202,7 +202,7 @@ namespace DamasNamas.ViewModels
 
 				for (int i = 0; i < jugadores.Count && !existe; i++)
 				{
-					if (jugadores[i].nombre.ToUpper().Equals(Username.ToUpper()))
+					if (jugadores[i].nombre.ToUpper().Equals(Username.ToUpper().Trim()))
 					{
 						existe = true;
 					}

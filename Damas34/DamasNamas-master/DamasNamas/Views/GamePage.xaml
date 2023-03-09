@@ -1,33 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
-    
-<!--xmlns:alohakit="clr-namespace:AlohaKit.Animations;assembly=AlohaKit.Animations"
-             x:Class="_13_Resources2.MainPage">
-    <ContentPage.Resources>
-
-        <LinearGradientBrush x:Key="buttonBackground">
-            <GradientStop Offset="0" Color="Silver"/>
-            <GradientStop Offset="1" Color="Orange"/>
-        </LinearGradientBrush>
-       
-        <alohakit:StoryBoard
-            x:Key="StoryBoard"
-            Target="{x:Reference FadeBox}">
-            <alohakit:TranslateToAnimation
-            Duration="2000"
-             TranslateX="100"
-             TranslateY="100">
-            </alohakit:TranslateToAnimation>
-            <alohakit:ShakeAnimation />
-            
-            <alohakit:FadeToAnimation   
-            Duration="2000"
-             Opacity="0"/>
-           
-        </alohakit:StoryBoard>
-    </ContentPage.Resources>-->
-    
-    
-    
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DamasNamas.Views.GamePage"
@@ -41,30 +12,36 @@
     <VerticalStackLayout
         Spacing="{OnPlatform Android=5}">
         <Frame
+            Opacity=".7"
             Padding="0,0,0,10"
             CornerRadius="60"
-            WidthRequest="60"
-            HeightRequest="60">
-        <Label 
+            WidthRequest="80"
+            HeightRequest="80">
+            <Label 
             Margin="{OnPlatform Android='0,10,0,0'}"
                 FontSize="20"
-                FontFamily="Bold"
+                FontFamily="Starjedi"
                 Text="{Binding RelojMostrado}"
                 VerticalOptions="Center"
                 HorizontalOptions="Center"/>
         </Frame>
+        <HorizontalStackLayout>
+        
         <Frame
+            HeightRequest="80"
+            HorizontalOptions="End"
             BorderColor="Gold"
             Margin="5,10,5,5"
             CornerRadius="20"
             BackgroundColor="{Binding ColorTurnoArriba}">
-            <HorizontalStackLayout>
+            <HorizontalStackLayout
+                Spacing="30"
+                >
 
                 <Label
                 FontSize="25"
-                HeightRequest="30"
-                WidthRequest="300"
-                FontFamily="Bold"
+                HeightRequest="40"
+                FontFamily="Starjedi"
                 Text="{Binding NombreJugadorArriba, Mode=OneWay}"
                 VerticalOptions="Center"
                 HorizontalOptions="Start"/>
@@ -72,7 +49,8 @@
 
                 <Label
                 FontSize="25"
-                FontFamily="Bold"
+                HeightRequest="40"
+                FontFamily="Starjedi"
                 Text="{Binding Tablero.PiezasBlancas}"
                 VerticalOptions="Center"
                 HorizontalOptions="End"/>
@@ -80,12 +58,19 @@
 
             </HorizontalStackLayout>
         </Frame>
-
+            <Image
+            Source="destructor"
+                HeightRequest="120"
+                WidthRequest="180"/>
+        </HorizontalStackLayout>
 
 
         <Frame
+            BackgroundColor="Black"
+            BorderColor="Black"
+            Padding="0,7,0,0"
             >
-        <CollectionView 
+            <CollectionView 
             x:Name="tablero"
             SelectionMode="Single"
             VerticalOptions="Center"
@@ -94,59 +79,70 @@
             SelectedItem="{Binding HuecoSeleccinado}"
             HeightRequest="{OnPlatform Android=410, WinUI=350}"
             WidthRequest="{OnPlatform Android=385, WinUI=300}">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="8" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="8" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
 
-                <DataTemplate>
-                    <AbsoluteLayout
+                    <DataTemplate>
+                        <AbsoluteLayout
                             VerticalOptions="Center"
                             HeightRequest="{OnPlatform Android=50, WinUI=40}"
                             WidthRequest="{OnPlatform Android=50, WinUI=40}"
                             >
 
-                        <Image 
+                            <Image 
                                 WidthRequest="{OnPlatform Android=50, WinUI=40}"
                                 HeightRequest="{OnPlatform Android=50,WinUI=40}"
                                 Source="{Binding ColorFondo}"/>
-                        <Image 
+                            <Image 
                             AbsoluteLayout.LayoutBounds="{OnPlatform Android='20,15,11,20'}"
                                 WidthRequest="{OnPlatform Android=45, WinUI=20}"
                                 HeightRequest="{OnPlatform Android=50,WinUI=20}"
                                 Source="{Binding Pieza}"/>
 
-                    </AbsoluteLayout>
+                        </AbsoluteLayout>
 
 
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Frame>
-        <Frame
+        <HorizontalStackLayout>
+
+            <Image
+            Source="halcon"
+                HeightRequest="100"
+                WidthRequest="214"/>
+            <Frame
             CornerRadius="20"
+                HeightRequest="70"
+            HorizontalOptions="End"
             Margin="5,5,5,5"
             BackgroundColor="{Binding ColorTurnoAbajo}"
            >
             <HorizontalStackLayout
-                Spacing="0">
+                Spacing="30">
                 <Label
                 FontSize="25"
-                HeightRequest="30"
-                WidthRequest="300"
-                FontFamily="Bold"
+                    
+                HeightRequest="40"
+                FontFamily="Starjedi"
                 Text="{Binding NombreJugadorAbajo, Mode=OneWay}"
                 VerticalOptions="Center"
                 HorizontalOptions="Start"/>
 
                 <Label
                 FontSize="25"
-                FontFamily="Bold"
+                    HeightRequest="40"
+                FontFamily="Starjedi"
                 Text="{Binding Tablero.PiezasNegras}"
                 VerticalOptions="Center"
-                HorizontalOptions="End"/>
+                HorizontalOptions="Center"/>
             </HorizontalStackLayout>
         </Frame>
+
+       </HorizontalStackLayout>
 
     </VerticalStackLayout>
 </ContentPage>

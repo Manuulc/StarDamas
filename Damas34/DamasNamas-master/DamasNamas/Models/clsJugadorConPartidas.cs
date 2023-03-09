@@ -13,7 +13,7 @@ namespace DamasNamas.Models
 
 		public int partidasGanadas { get; set; }
 
-		public clsJugadorConPartidas(String nombre, String password, List<clsSala> partidasJugadas, int _partidasGanadas)
+		public clsJugadorConPartidas(int idJugador, String nombre, String password, List<clsSala> partidasJugadas, int _partidasGanadas)
 		{
 			base.idJugador = idJugador;
 			base.nombre=nombre;
@@ -21,27 +21,28 @@ namespace DamasNamas.Models
 			partidas=partidasJugadas;
 			partidasGanadas = _partidasGanadas;
 		}
-		public clsJugadorConPartidas(String nombre, String password, List<clsSala> partidasJugadas)
+		public clsJugadorConPartidas(int idJugador, String nombre, String password, List<clsSala> partidasJugadas)
 		{
 			base.idJugador = idJugador;
 			base.nombre=nombre;
 			base.password=password;
 			partidas=partidasJugadas;
 			
-			partidasGanadas = comprobarPartidas();
+			comprobarPartidas();
 		}
 
 
-		int comprobarPartidas()
+		public int comprobarPartidas()
 		{
 			var pg = 0;
 			foreach (var partida in partidas)
 			{
-				if ((partida.cantidadFichasAbajo < partida.cantidadFichasArriba && idJugador == partida.jugadorArriba) || (partida.cantidadFichasArriba < partida.cantidadFichasAbajo && idJugador == partida.jugadorAbajo))
+				if ((partida.cantidadFichasAbajo > partida.cantidadFichasArriba && idJugador == partida.jugadorAbajo) || (partida.cantidadFichasArriba > partida.cantidadFichasAbajo && idJugador == partida.jugadorArriba))
 				{
 					pg++;
 				}
 			}
+			partidasGanadas = pg;
 			return pg;
 		}
 	}

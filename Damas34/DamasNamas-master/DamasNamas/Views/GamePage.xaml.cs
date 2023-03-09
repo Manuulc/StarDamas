@@ -13,6 +13,7 @@ public partial class GamePage : ContentPage
 
     protected override async void OnAppearing()
     {
+		InitializeComponent();
         base.OnAppearing();
     }
 

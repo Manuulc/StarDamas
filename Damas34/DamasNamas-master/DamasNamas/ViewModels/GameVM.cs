@@ -584,9 +584,6 @@ namespace DamasNamas.ViewModels
 					if (!HuecoSeleccinado.EsReina)
 					{
 						ListaPosiblesHuecos = new ObservableCollection<Square>(GetMovimientoPieza());
-
-
-
 					}
 					else
 					{
@@ -775,20 +772,24 @@ namespace DamasNamas.ViewModels
 				TransformarReina();
 				var comer = Comer();
 				//Comerpieza
-				if (!comer || (comer && ListaPosiblesHuecos.Count == 0))
+				if (!comer )
 				{
-					if (Tablero.PiezasBlancas == 0 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasBlancas == 1)))
+					if (Tablero.PiezasBlancas == 11 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasBlancas == 1)))
 					{
 						Estado = EstadosJuego.NegroGana;
 						haGanado = true;
 						comprobarGanador();
 					}
-					else if (Tablero.PiezasNegras == 0 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasNegras == 1)))
+					else if (Tablero.PiezasNegras == 11 || (ListaPosiblesHuecos.Count() == 0 && (Tablero.PiezasNegras == 1)))
 					{
 						Estado = EstadosJuego.BlancoGana;
 						haGanado = true;
 						comprobarGanador();
 					}
+					SetTurno();
+				}
+				else if(comer && ListaPosiblesHuecos.Count == 0)
+				{
 					SetTurno();
 				}
 
@@ -845,11 +846,10 @@ namespace DamasNamas.ViewModels
 			if (difY > 0 && difX > 0)
 			{
 				huecoAComer = HuecosTablero.Where(x => x.PosX == (HuecoSeleccinado.PosX - 1) && x.PosY == (HuecoSeleccinado.PosY - 1)).First();
-
 			}
 			else if (difY > 0 && difX < 0)
 			{
-				huecoAComer = HuecosTablero.Where(x => x.PosX == (HuecoSeleccinado.PosX - 1) && x.PosY == (HuecoSeleccinado.PosY + 1)).First();
+				huecoAComer = HuecosTablero.Where(x => x.PosX == (HuecoSeleccinado.PosX + 1) && x.PosY == (HuecoSeleccinado.PosY - 1)).First();
 			}
 			else if (difY < 0 && difX > 0)
 			{
@@ -945,10 +945,10 @@ namespace DamasNamas.ViewModels
 						huecomido = HuecosTablero
 							.Where(
 							x =>
-							((x.PosX > HuecoAnterior.PosX) && (x.PosX < HuecoSeleccinado.PosX))
-							&&
-							(x.PosY == HuecoAnterior.PosY + signoDifY))
-							.First();
+									((x.PosX > HuecoAnterior.PosX) && (x.PosX < HuecoSeleccinado.PosX))
+									&&
+									(x.PosY == HuecoAnterior.PosY + signoDifY))
+									.First();
 
 					}
 					else if (signoDifY < 0 && (HuecoSeleccinado.PosX < HuecoAnterior.PosX))
@@ -984,21 +984,22 @@ namespace DamasNamas.ViewModels
 
 				}
 				if (huecomido == null)
-				{
-					return haComido = false;
-				}
-				else if (huecomido.TipoPieza.Equals(ColorPieza.None))
-				{
+			{
+				return haComido = false;
+			}
+			else if (huecomido.TipoPieza.Equals(ColorPieza.None))
+			{
 
-					return haComido = false;
-				}
-				huecomido.Pieza = "lightynone";
-				huecomido.EsReina = false;
-				if (Estado.Equals(EstadosJuego.TurnoBlancas))
-					Tablero.PiezasNegras--;
-				if(Estado.Equals(EstadosJuego.TurnoNegras))
-					Tablero.PiezasBlancas--;
-			
+				return haComido = false;
+			}
+			huecomido.Pieza = "lightynone";
+			huecomido.EsReina = false;
+			if (Estado.Equals(EstadosJuego.TurnoBlancas))
+				Tablero.PiezasNegras--;
+			if (Estado.Equals(EstadosJuego.TurnoNegras))
+				Tablero.PiezasBlancas--;
+
+
 
 
 			}

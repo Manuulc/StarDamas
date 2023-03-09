@@ -128,10 +128,10 @@ namespace DamasNamas.ViewModels
 					pass = await Shell.Current.DisplayPromptAsync("Registrate de la forma más segura", ("Contraseña"), "Ok", "Cancel");
 					if (!pass.Equals("Cancel"))
 					{
-						jugadorAbajo = await LoginVM.TestSignUp(name, pass);
+						
 						try
 						{
-							clsGestionJugadoresBL.insertarJugadorBL(jugadorAbajo);
+							jugadorAbajo = await LoginVM.TestSignUp(name, pass);
 						}catch (Exception ex)
 						{
                             await Shell.Current.DisplayAlert("Error", "No se ha podido registrar el usuario", "Ok");

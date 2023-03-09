@@ -9,16 +9,16 @@ using System.Collections.ObjectModel;
 using Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DamasNamas.Models;
+using DamasNamas.ViewModels.Utilidades;
 
 namespace DamasNamas.ViewModels
 {
-	partial class TablaPuntuacionesVM : ObservableObject
+	partial class TablaPuntuacionesVM : VMBase
 	{
 
 		#region Atributos
 
 		private ObservableCollection<clsSala> listaSalas;
-		private ObservableCollection<clsSala> jugadoresVelocistas;
 		private ObservableCollection<clsJugadorConPartidas> jugadoresBuenisimos;
 
 		#endregion
@@ -37,18 +37,7 @@ namespace DamasNamas.ViewModels
 				listaSalas = value;
 			}
 		}
-		public ObservableCollection<clsSala> JugadoresVelocistas
-		{
-			get
-			{
-				return jugadoresVelocistas;
-			}
-			set
-			{
-				jugadoresVelocistas = value;
-				OnPropertyChanged(nameof(JugadoresVelocistas));
-			}
-		}
+
 		public ObservableCollection<clsJugadorConPartidas> JugadoresBuenisimos
 		{
 			get
@@ -82,6 +71,7 @@ namespace DamasNamas.ViewModels
 		/// </summary>
 		private async void CargarJugadoresBuenisimos()
 		{
+			var listAuxjugadoresBuenisimos = new ObservableCollection<clsJugadorConPartidas>();
 
 			try
 			{
@@ -91,25 +81,26 @@ namespace DamasNamas.ViewModels
 
 				foreach (var player in listaJugadores)
 				{
-					
-					var listaPartidas = new List<clsSala>();
-					for (int i = 0; i<listaSalas.Count(); i++)
+					if (player.idJugador!=0)
 					{
-						var cantidadFichasArriba = listaSalas.ElementAt(i).cantidadFichasArriba;
-						var cantidadFichasAbajo = listaSalas.ElementAt(i).cantidadFichasAbajo;
-						var jugadorArribaSala = listaSalas.ElementAt(i).jugadorArriba;
-						var jugadorAbajoSala = listaSalas.ElementAt(i).jugadorAbajo;
-
-						if(jugadorArribaSala== player.idJugador || jugadorAbajoSala == player.idJugador)
+						var listaPartidas = new List<clsSala>();
+						for (int i = 0; i<listaSalas.Count(); i++)
 						{
-							listaPartidas.Add(listaSalas.ElementAt(i));
+							var cantidadFichasArriba = listaSalas.ElementAt(i).cantidadFichasArriba;
+							var cantidadFichasAbajo = listaSalas.ElementAt(i).cantidadFichasAbajo;
+							var jugadorArribaSala = listaSalas.ElementAt(i).jugadorArriba;
+							var jugadorAbajoSala = listaSalas.ElementAt(i).jugadorAbajo;
+
+							if (jugadorArribaSala== player.idJugador || jugadorAbajoSala == player.idJugador)
+							{
+								listaPartidas.Add(listaSalas.ElementAt(i));
+							}
+
 						}
-						
+						var jugador = new clsJugadorConPartidas(player.idJugador,player.nombre, player.password, listaPartidas);
+
+						listAuxjugadoresBuenisimos.Add(jugador);
 					}
-					var jugador = new clsJugadorConPartidas(player.nombre, player.password, listaPartidas);
-
-					JugadoresBuenisimos.Add(jugador);
-
 				}
 
 			}
@@ -118,30 +109,12 @@ namespace DamasNamas.ViewModels
 				await Shell.Current.DisplayAlert("ERROR", "Se ha producido un error al obtener las salas de la API", "Po vale");
 			}
 
+			var listaAux = listAuxjugadoresBuenisimos.OrderByDescending(x => x.partidasGanadas);
+			JugadoresBuenisimos = new ObservableCollection<clsJugadorConPartidas>(listaAux);
 
 		}
 
 
-
-		/// <summary>
-		/// Metodo para cargar la lista de jugadores ordenada por el tiempo de la partida. Aqui solo se ven los mas rapidos
-		/// </summary>
-		private async void CargarJugadoresVelocistas()
-		{
-
-			try
-			{
-				listaSalas = await clsListadoSalasBL.getSalasBL();
-				jugadoresVelocistas = new ObservableCollection<clsSala>(listaSalas.OrderBy(p => p.tiempo));
-
-			}
-			catch (Exception e)
-			{
-				await Shell.Current.DisplayAlert("ERROR", "Se ha producido un error al obtener las salas de la API", "Po vale");
-			}
-
-
-		}
 
 
 
